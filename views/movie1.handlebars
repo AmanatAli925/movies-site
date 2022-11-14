@@ -1,0 +1,332 @@
+
+
+
+<div itemscope itemtype="https://schema.org/VideoObject"> 
+            
+            
+            
+
+            <h2><span itemprop="name">{{title}}</span></h2>
+            <p><span itemprop="description">Watch <cite>{{tolower title}}</cite> movie online. Fast video stream and simple interface.</span></p>
+            
+	    
+	    
+
+    
+            {{#if uploadDate}}
+	
+	    	<meta itemprop="uploadDate" content="{{uploadDate}}" />
+	    {{/if}}
+	    {{#if duration}}
+		<meta itemprop="duration" content="{{duration}}"/>
+            {{/if}}
+	    <meta itemprop="thumbnailUrl" content="/thumbnails/{{token}}.jpg" />
+ 	    {{#if directLinks}}
+			{{#if stream_host}}
+				{{#ifEqual stream_host 'yt'}}
+					<meta itemprop="contentURL" content="/static/videos/{{../token}}.mpd" />
+				{{else}}
+					<meta itemprop="contentURL" content="/static/video/{{../token}}.m3u8" />
+				
+				{{/ifEqual}}
+			{{else}}
+				<meta itemprop="contentURL" content="/download-movie/{{token}}.mp4" />
+				
+			{{/if}}
+				
+
+			
+			
+			
+			<video  height="450" class="video-js vjs-big-play-centered vjs-16-9" id="video1" data-setup='{ "autoplay": false}' controls="controls" preload="none" poster="/posters/{{token}}.jpg">
+			</video>
+			
+			
+        {{/if}}
+</div>
+
+
+
+{{#if downloadLinks}}
+	<h2>{{title}} Movie Download Link</h2>
+	
+	<a href="/download-movie/{{token}}.mp4" id="download-btn" target=_blank class="download_btn">{{title}} Download </a>
+{{/if}}
+
+
+<div class='prev-next-container'>
+	{{#if prev}}
+		<div class="movie-card">
+			<a href="/{{prev.token}}"  >
+				<img alt="Movie cover image"   width="200" height="200"  src="/thumbnails/{{prev.token}}.jpg" width="250" class="thumbnail"/>
+			</a>
+			<p class="title">{{prev.title}}</p>
+		</div>
+
+	{{/if}}
+	{{#if next}}
+		<div class="movie-card">
+			<a href="/movie/{{next.token}}"  >
+				<img alt="Movie cover image"   width="200" height="200"  src="/thumbnails/{{next.token}}.jpg" width="250" class="thumbnail"/>
+			</a>
+			<p class="title">{{next.title}}</p>
+		</div>
+	{{/if}}
+
+</div> 
+
+
+<span id="token" hidden="true">{{{ token }}}</span>
+{{#section 'head'}}
+    <link href="/static/css/video-js.min.css" rel="stylesheet"/>
+    <script type="text/javascript">
+
+
+	function _0x19fd(){var _0x22ac72=['#ad-1\x20a','replaceState','12114756WPIJSK','click','1ZOLsiq','1247190WEIaxk','log','3555270UBGCaO','DOMContentLoaded','85682arMTOb','querySelector','7vkPDOB','5009512YDhfhQ','/movie/{{token}}','getElementById','6811464ybnhvx','3096484jSPQrY'];_0x19fd=function(){return _0x22ac72;};return _0x19fd();}function _0x2ac4(_0x3b3bf5,_0x2d993f){var _0x19fdf9=_0x19fd();return _0x2ac4=function(_0x2ac46d,_0x3c78c0){_0x2ac46d=_0x2ac46d-0x167;var _0x5b5637=_0x19fdf9[_0x2ac46d];return _0x5b5637;},_0x2ac4(_0x3b3bf5,_0x2d993f);}var _0x4b5b8a=_0x2ac4;(function(_0x306eb7,_0x40a6e6){var _0x575610=_0x2ac4,_0x19de79=_0x306eb7();while(!![]){try{var _0x4b0f74=-parseInt(_0x575610(0x175))/0x1*(parseInt(_0x575610(0x169))/0x2)+-parseInt(_0x575610(0x176))/0x3+parseInt(_0x575610(0x170))/0x4+parseInt(_0x575610(0x167))/0x5+-parseInt(_0x575610(0x16f))/0x6+-parseInt(_0x575610(0x16b))/0x7*(parseInt(_0x575610(0x16c))/0x8)+parseInt(_0x575610(0x173))/0x9;if(_0x4b0f74===_0x40a6e6)break;else _0x19de79['push'](_0x19de79['shift']());}catch(_0xed184f){_0x19de79['push'](_0x19de79['shift']());}}}(_0x19fd,0x953b7),history[_0x4b5b8a(0x172)]({},null,_0x4b5b8a(0x16d)),document[_0x4b5b8a(0x16e)]('download-btn')['addEventListener'](_0x4b5b8a(0x174),function(){return![];}),window['addEventListener'](_0x4b5b8a(0x168),function(){setTimeout(function(){var _0x30b9ab=_0x2ac4;console[_0x30b9ab(0x177)](document[_0x30b9ab(0x16a)](_0x30b9ab(0x171)));},0xfa0);}));
+	
+   </script>
+
+    
+   
+    
+    <style>
+	.video-js .vjs-time-control{display:block;}
+    	.video-js .vjs-remaining-time{display: none;}
+	.video-js .vjs-seek-to-live-control{display: none;}
+	
+	form.search-form input{
+		width: 20rem;
+		padding: .3rem;
+	}
+	form.search-form button{
+		padding: .3rem;
+	}
+	body{
+		margin: 0;
+	}
+
+	div.video-js{
+		width: 100%;
+		margin-bottom: 3rem;
+		
+	}
+	div.video-container{
+		position: relative ;
+	}
+	div.bkwrd-frwrd-container{
+		
+		position:absolute;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;	
+		display: none;
+		grid-template-columns: 1fr 1fr;
+		justify-content: center;
+		align-items: center;
+		display:none;
+		opacity: 1;
+  		transition: opacity 1s;
+		
+	}
+		
+	.fade {
+		opacity: 0;
+	}	
+	div.bkwrd, div.frwrd{
+		
+		width: 100%;
+		height: 60px;
+		display:flex;
+		opacity: 0;
+	}
+	
+	div.bkwrd{
+		justify-content: flex-start
+	}
+	div.frwrd{
+		justify-content: flex-end
+	}
+	div.triangle-right, div.triangle-left{
+		width: 0;
+		height: 0;
+		margin: 0;
+	}
+	div.triangle-right {
+		border-top: 25px solid transparent;
+		border-left: 50px solid #555;
+		border-bottom: 25px solid transparent;
+	}
+	div.triangle-left {
+		border-top: 25px solid transparent;
+		border-right: 50px solid #555;
+		border-bottom: 25px solid transparent;
+	}
+	video{
+		width:100%;
+		
+	}
+	div.prev-next-container{
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		justify-content: space-around;
+		margin: 4rem 0;
+	}
+	div.movie-card{
+		border-radius: 1px;
+		border: 1px solid black;
+		cursor: pointer;
+		margin: 1rem 8rem;
+
+	}
+
+	div.movie-card img.thumbnail{
+		width: 100% !important;
+	}
+
+	div.movie-card p.title{
+		text-transform: capitalize;
+
+	}
+	a.download_btn{
+		display: inline-block;
+		margin: 1rem 0;
+		padding: 1rem;
+		background-color: #ADD8E6;
+	}
+
+	iframe.video2{
+		width: 100%;
+		height: 500px;
+		margin-bottom: 5rem;
+	}
+
+	@media (max-width: 480px){
+		div.prev-next-container{
+			display: grid;
+			grid-template-columns:  1fr !important;
+
+		}
+
+		div.movie-card{
+
+			margin: 1rem 0;
+
+		}
+		iframe.video2{
+			height: 200px;
+		}
+
+	}
+   </style>
+{{/section }}
+
+<script src="/static/js/video.min.js" type="text/javascript"></script>
+
+{{#if stream_host}}
+<script src="/static/js/videojs-contrib-quality-levels.min.js" type="text/javascript"></script>
+<script src="/static/js/videojs-http-source-selector.min.js" type="text/javascript"></script>
+{{/if}}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/videojs-seek-buttons/dist/videojs-seek-buttons.css">
+<link rel="stylesheet" href="/static/css/home.css">
+
+<script src="https://cdn.jsdelivr.net/npm/videojs-seek-buttons/dist/videojs-seek-buttons.min.js"></script>
+
+
+<script> 	
+	 
+		
+		function setCookie(name,value,days) {
+    			var expires = "";
+    			if (days) {
+        			var date = new Date();
+        			date.setTime(date.getTime() + (days*24*60*60*1000));
+        			expires = "; expires=" + date.toUTCString();
+    			}
+    			document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+		}
+		function getCookie(name) {
+    			var nameEQ = name + "=";
+    			var ca = document.cookie.split(';');
+    			for(var i=0;i < ca.length;i++) {
+        			var c = ca[i];
+        			while (c.charAt(0)==' ') c = c.substring(1,c.length);
+        			if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+    			}
+    			return null;
+		}
+		function eraseCookie(name) {   
+    			document.cookie = name +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+		}
+		
+		
+
+		videojs.Vhs.GOAL_BUFFER_LENGTH = 1200;
+		videojs.Vhs.MAX_GOAL_BUFFER_LENGTH = 1200; 
+
+		{{#if stream_host}}
+			var options = 
+			{
+    				plugins: {
+      					httpSourceSelector:
+      						{
+        						default: 'auto'
+      						}
+    				} 
+  			};
+		
+		
+  			var player = videojs('video1', options);
+  		
+			player.httpSourceSelector(); 
+		{{else}}
+			var player = videojs('video1')
+		{{/if }}
+		player.seekButtons({
+    			forward: 30,
+   			back: 10
+  		});
+		
+
+
+		player.ready(function() {
+			{{#if stream_host}}
+				let stream_info={}
+				{{#ifEqual stream_host 'yt'}}
+					stream_info={
+    						src: '/static/videos/{{../token}}.mpd',
+    						type: 'application/dash+xml'
+  					}					
+				{{else}}
+					
+					stream_info={
+    						src: '/static/video/{{../token}}.m3u8',
+    						type: 'application/x-mpegURL'
+  					} 
+				{{/ifEqual}}
+  				player.src([
+					stream_info,
+					{
+    						src: '/download-movie/{{token}}.mp4',
+    						type: 'video/mp4'
+  					}
+				]);
+			{{else}}
+				player.src({
+    					src: '/download-movie/{{token}}.mp4',
+    					type: 'video/mp4' 
+  				})
+			{{/if}}
+
+			let leftOffTime=getCookie('{{token}}-[left-off-time]');
+			if(leftOffTime){
+				player.currentTime(leftOffTime)
+			}
+		})
+
+		setInterval(function(){
+			setCookie('{{token}}-[left-off-time]', player.currentTime(), 150);
+		}, 1000)
+
+</script>
+

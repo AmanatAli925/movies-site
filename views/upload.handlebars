@@ -1,0 +1,40 @@
+<form method="post" action="/upload" id="upload-form">
+	<input type="hidden" name="count" id="count" value="1"/>
+	<input placeholder="Url" name="url1"/>
+	<input placeholder="Filename" name="name1"/>
+	<button type="submit">Submit</button>
+	<button type="button" onclick="addField()">Add</button>
+</form>
+
+
+
+<style>
+	#upload-form{
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		width: 70%;
+		margin: auto;
+	}
+</style>
+
+
+<script>
+	var count =1;
+	function addField(){
+		
+		
+		count++;
+		var form=document.getElementById("upload-form");
+		var input= document.createElement('INPUT');
+		input.setAttribute('placeholder', "Url")
+		input.setAttribute('name', "url"+count)
+		
+		var input1= document.createElement('INPUT');
+		input1.setAttribute('placeholder', "Filename")
+		input1.setAttribute('name', "name"+count)
+	
+		form.prepend(input1)
+		form.prepend(input)
+		document.getElementById('count').value=count;
+	}
+</script>

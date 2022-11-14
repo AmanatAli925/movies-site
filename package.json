@@ -1,0 +1,40 @@
+{
+  "name": "movies",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.26.0",
+    "@aws-sdk/s3-request-presigner": "^3.26.0",
+    "aws-sdk": "^2.959.0",
+    "axios": "^0.21.4",
+    "cors": "^2.8.5",
+    "devtools-detect": "^4.0.0",
+    "dotenv": "^16.0.3",
+    "express": "^4.17.1",
+    "express-handlebars": "^5.2.1",
+    "got": "^11.8.2",
+    "hls-server": "^1.5.0",
+    "html-entities": "^2.3.2",
+    "http-proxy": "^1.18.1",
+    "mongoose": "^6.3.5",
+    "node-html-parser": "^5.1.0",
+    "node-tick-processor": "^0.0.2",
+    "request": "^2.88.2",
+    "spdy": "^4.0.2",
+    "stream-buffers": "^3.0.2",
+    "ua-parser-js": "^1.0.2",
+    "videojs-contrib-quality-levels": "^2.1.0",
+    "videojs-http-source-selector": "^1.1.6",
+    "youtube-dl-exec": "^1.3.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}

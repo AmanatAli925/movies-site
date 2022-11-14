@@ -1,0 +1,31 @@
+<div class="download-links">
+	{{#ifEqual qualities.length 1}}
+		<a href="https://www.themovieshouse.com/download-movie/{{../token}}.mp4">{{ ../movie_name }} 720p Download  Link</a><br>
+
+	{{else}}
+		{{#each ../qualities}}
+			{{#ifEqual this 360}}
+				<a href="https://www.themovieshouse.com/download-movie/{{../../../token}}.mp4">{{ ../../../movie_name }} {{../this}}p Download  Link</a><br>
+			{{else}}
+				<a href="https://www.themovieshouse.com/download-movie/{{../this}}/{{../../../token}}.mp4">{{ ../../../movie_name }} {{../this}}p Download  Link</a><br>
+
+			{{/ifEqual}}
+		{{/each}}
+
+	{{/ifEqual}}
+	
+</div>
+
+
+{{#section 'head'}}
+	<style>
+		div.download-links a {
+			display: inline-block;
+			padding: .5rem;
+			text-decoration: none;
+			color: black;
+			border: 1px solid black;
+			margin: .5rem;
+		}
+	</style>
+{{/section}}

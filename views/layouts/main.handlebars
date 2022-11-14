@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="keywords" content="{{keywords}}, watch, movies, online"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Watch any movie online. Fast video stream and simple interface.Simple download method. Direct download link with one click.Enjoy!"/>	
+    {{{ this.sections.head}}}
+    {{#if movie_name}}
+	<title>Download Links for {{movie_name}} Movie </title>
+    	{{else}} 
+		{{#if title}}
+			<title>{{title}}  Full Movie Download Or Stream Online </title>
+   		{{else}}
+			<title> Download Full Movies Or Watch Online </title> 
+		{{/if}} 
+   {{/if}}
+	<style>
+		body{
+			text-align: center;
+		}
+		video{
+			width: 100% !important;
+		}
+	</style>
+	
+	
+	{{#if analytics}}
+		
+
+		<!-- Global site tag (gtag.js) - Google Analytics 
+		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-201289682-1"></script>
+		<script>
+			if (window.history.replaceState) {
+   				//prevents browser from storing history with each change:
+   				window.history.replaceState({}, null, '/movie/{{token}}');
+			}
+  			window.dataLayer = window.dataLayer || [];
+  			function gtag(){dataLayer.push(arguments);}
+  			gtag('js', new Date());
+
+  			gtag('config', 'UA-201289682-1');
+			window.onerror = function(message, source, lineno, colno, error) {
+  				if (error) message = error.stack;
+  				//ga('send', 'event', 'window.onerror', message, navigator.userAgent);
+				gtag('event', 'error', {
+  					'event_category': 'errors',
+  					'event_label': message+'	'+navigator.userAgent+'		'+ (new Date()).toUTCString().split(' ').slice(-2)[0],
+				});
+			}
+		</script>-->
+
+		<script async src="https://www.googletagmanager.com/gtag/js?id=G-NBMLGGF6FX"></script>
+		<script>
+		  	window.dataLayer = window.dataLayer || [];  
+  			function gtag(){dataLayer.push(arguments);}
+  			gtag('js', new Date());
+
+  			gtag('config', 'G-NBMLGGF6FX');
+		</script>
+	{{/if}}
+	<meta name="google-site-verification" content="7gwthYpFiRwxiIFgQsKD_aL8ZLyzJMXQJiRhV92_f1U" />
+	
+
+  </head>
+  <body>
+	<nav class="navbar">
+		<ul class="main-links" id="main-links">
+			<li><a href="/" class="home-link">Home</a></li>
+			<div class="dropdown-container"> 
+				<button class="dropdown-btn" id="categories-btn">Categories</button>
+				<ul class="dropdown" id="categories-list">
+					<li>
+						<a href="/?search=English Movies"> English Movies</a>
+					</li>
+					<li>
+					   	<a href="/?search=Hindi Dubbed Movies">Hindi Dubbed Movies</a>
+					</li>
+					<li>
+						<a href="/?search=Punjabi Movies"> Punjabi Movies</a>
+					</li>
+					<li>
+						<a href="/?search=720p Movies"> 720P Movies</a>
+					</li>
+	
+				</ul> 
+			</div>
+			<div class="dropdown-container">
+				<button class="dropdown-btn" id="by-year-btn">By Year</button>
+				<ul class="dropdown" id="by-year-list">
+					<li>
+						<a href="/?search=2022 Movies"> 2022 Movies</a>
+					</li>
+					<li>
+						<a href="/?search=2021 Movies"> 2021 Movies</a>
+					</li>
+
+					<li>
+						<a href="/?search=2020 Movies"> 2020 Movies</a>
+					</li>
+
+					<li>
+						<a href="/?search=2019 Movies"> 2019 Movies</a>
+					</li>
+
+	
+				</ul>
+			</div>
+			<form class="search-form" method="GET" action="/">
+				<input value="{{search}}" id="search-field" placeholder="Enter name of movie, actor, genre..." type="text" name="search"/>
+				<button type="Submit" >Search</button>
+			</form> 
+		</ul>
+		<div class="hamburger-btn" >
+			<button id="hamburger-btn"></button>
+		</div>
+	</nav>
+    {{{body}}}
+
+	<script>
+		var categories_btn = document.getElementById('categories-btn')
+		var by_year_btn  = document.getElementById('by-year-btn')
+		var hamburger_btn= document.getElementById('hamburger-btn')
+		var dropdowns_rel={
+			'categories-btn': 'categories-list',
+			'by-year-btn': 'by-year-list',
+			'hamburger-btn': 'main-links'
+		}
+		class Dropdown{
+			static all_instances=[]
+			constructor(el_id){
+				this.expanded=false
+				this.list= document.getElementById(el_id)
+				this.real_height= this.list.clientHeight;
+				this.list.style.height= "0px"
+				if(!Dropdown.instances)
+					Dropdown.instances=[]
+				Dropdown.instances.push(this)
+			}
+			toggle(){
+			
+				if(!this.expanded){
+					this.list.style.maxHeight="initial"
+					this.list.style.height=this.real_height+"px"
+				
+					this.expanded=true
+				}else this.close()
+			
+			}
+			close(){
+				this.expanded=false
+				this.list.style.height="0px"
+			}
+			close_immediate(){
+				this.expanded=false
+				this.list.style.maxHeight="0px"
+				this.list.style.height="0px"
+			}
+
+		}
+
+		var categories= new Dropdown('categories-list')
+		var by_year= new Dropdown('by-year-list')
+		var mobile_dropdown =new Dropdown('main-links')		
+
+		function close_inactives(el_id){
+			Dropdown.instances.forEach(function(instance){
+				if(instance.list.id!= el_id)
+					instance.close_immediate()
+			
+			})
+		}
+		categories_btn.addEventListener('click', function(){ 
+			close_inactives(dropdowns_rel[event.target.id]) 
+			categories.toggle()
+		})
+		hamburger_btn.addEventListener('click', function(){ 
+			mobile_dropdown.toggle()
+		})
+
+		by_year_btn.addEventListener('click', function(){ 
+			close_inactives(dropdowns_rel[event.target.id]) 
+			by_year.toggle()
+		})
+
+	</script>
+  </body>
+</html>
+

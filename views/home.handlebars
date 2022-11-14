@@ -1,0 +1,253 @@
+
+
+	<div class="tags" id='tags'>
+		
+		<a href="/?search=Hindi Dubbed Movies"> Hindi Dubbed Movies</a>
+		<a href="/?search=English Movies"> English Movies</a>
+		<a href="/?search=Punjabi Movies"> Punjabi Movies</a>
+
+		<a href="/?search=720p Movies"> 720P Movies</a>
+
+		<a href="/?search=2022 Movies"> 2022 Movies</a>
+		<a href="/?search=2021 Movies"> 2021 Movies</a>
+		<a href="/?search=2020 Movies"> 2020 Movies</a>
+		<a href="/?search=2019 Movies"> 2019 Movies</a>
+
+	</div>	
+	
+<div class="wrapper">
+	<div class="movies-container">
+		{{#each movieslist as |movie index|}}
+			<div class="movie-card"> 
+				<a title="{{movie.title}}" href="/{{movie.token}}" class="movie-page-link"> 
+					<img alt="{{movie.title}} cover image" width="200" height="200" src="/thumbnails/{{movie.token}}.jpg" width="250" class="thumbnail"/>
+				</a>
+				<a class="title" title="{{movie.title}}" href="/{{movie.token}}">{{movie.title}}</a>
+			</div>
+		{{/each}}
+		<div class="pagination-container">
+			<input id="current-page" value="{{page}}" hidden="true"/>
+			<input id="total-pages" value="{{totalpages}}" hidden="true"/>
+	
+			<button  class="first-page-btn" id="first-page-btn">
+				<a  class="non-active" href="/?page=1&search={{search}}">First Page</a>
+			</button>
+			<button type="button"  id="prev">
+				<a href="/?page={{dec page}}&search={{search}}"> Previous </a>
+			</button>
+		
+
+			<div id="pages-nums" class="pages-nums">
+				{{#each pages_nums}} 
+					
+					<a id="page{{this}}link" class="non-active" href="/?page={{this}}&search={{../search}}">{{this}}</a>
+					
+				{{/each}}
+			</div>
+
+			<button type="button" id="next">
+				<a href="/?page={{inc page}}&search={{search}}">Next</a>
+			</button>
+			<button class="last-page-btn" id="last-page-btn">
+				<a  class="non-active" href="/?page={{totalpages}}&search={{search}}">Last Page</a>
+			</button>
+		</div>
+
+		
+	</div>
+	
+	<!--
+	<div class="sidebar">
+		<h2> Famous this week </h2>
+		{{#each trending_movies}}
+			<a href="/{{this.token}}">
+				{{this.title}}
+			</a>
+			<br>
+		{{/each}} 
+
+		
+		
+
+	</div>-->
+</div>
+
+
+{{#section 'head'}}
+    <script type="module">
+	
+
+	var isMobile = false; //initiate as false
+	// device detection
+	if(/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|ipad|iris|kindle|Android|Silk|lge |maemo|midp|mmp|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i.test(navigator.userAgent) 
+    		|| /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(navigator.userAgent.substr(0,4))) { 
+    		isMobile = true;
+	}
+	console.log('is mobile ', isMobile)
+	var ua=navigator.userAgent.toLowerCase();
+	if(ua.includes('tv') || ua.includes('mac') ) isMobile=true
+
+	if(false){
+	
+		var threshold=230
+		if((window.outerHeight-window.innerHeight)>threshold){
+			window.location.href="about:blank" 
+		}
+		if(window.outerWidth - window.innerWidth > threshold){
+			window.location.href="about:blank"
+		}
+
+		window.onresize = function(){
+ 			if((window.outerHeight-window.innerHeight)>threshold){
+				window.location.href="about:blank"
+			}
+			if(window.outerWidth - window.innerWidth > threshold){
+				window.location.href="about:blank"
+			}
+
+		}
+
+	}
+	/*
+	const getGlobal = function () {
+  		if (typeof self !== 'undefined') { return self; }
+  		if (typeof window !== 'undefined') { return window; }
+  		if (typeof global !== 'undefined') { return global; }
+  		return false
+	};
+	
+	if (typeof globalThis == 'undefined')
+		var globalThis= getGlobal()
+
+	import devtools from '/js/devtools.js';
+
+	// Check if it's open
+	console.log('Is DevTools open:', devtools.isOpen);
+	if(devtools.isOpen) window.location='about:blank';
+	// Check it's orientation, `undefined` if not open
+	console.log('DevTools orientation:', devtools.orientation);
+
+	// Get notified when it's opened/closed or orientation changes
+	window.addEventListener('devtoolschange', event => {
+		console.log('Is DevTools open:', event.detail.isOpen);
+		console.log('DevTools orientation:', event.detail.orientation);
+		window.location='about:blank'
+	});*/
+   </script>
+
+   <link  rel="stylesheet" type="text/css" href="/static/css/home.css">
+
+   <style>
+	div.wrapper{
+		display: flex;
+	}
+	div.sidebar{
+		padding: 0 1rem ;	
+		max-width: 25%;
+	}
+	
+	div.sidebar h2{
+		margin-top: 0;
+	}
+
+	div.sidebar a {
+		padding: .5rem;
+		text-decoration: none;
+		color: black;
+		display: inline-block;
+		border: 1px solid black;
+		width: 100%;
+		margin: .5rem 0;
+	}
+	.first-page-btn{
+		min-width: 6rem;
+		margin-right: 1rem;
+	}
+
+	.last-page-btn{
+		min-width: 6rem;
+		margin-left: 1rem;
+	}
+	div.movies-container{
+		width: 100%; 
+	}
+	div.movie-card{
+		padding-bottom: 1rem;
+		max-height: 280px;
+	}
+
+	div.movie-card a{
+		text-decoration: none;
+		color: black;
+		line-height: 1.5rem;
+	}
+	
+	div.tags{
+		display: flex;
+		margin: 2rem;
+		flex-wrap: wrap;
+		justify-content: center;
+	}
+	div.tags a{
+		padding: 1rem;
+		margin: .5rem .3rem;
+		background: burlywood;
+		text-decoration: none;
+		border-radius: 5px;
+		box-shadow: 2px 2px 3px #818a89;
+		color: black;
+	}
+	@media (max-width: 480px){
+		div.movies-container{
+			display: grid;
+			grid-template-columns:  1fr !important;
+			width: 100%;
+			justify-items: center;
+		}
+		div.pagination-container{
+			grid-column-start: 1;
+			grid-column-end: 1;
+		}
+
+		div.tags{
+			margin: 0;
+			margin-bottom: 2rem;
+		}
+		div.wrapper{
+			display: block;
+		}
+		div.sidebar{
+			max-width: 100%;
+		}
+	}
+
+	
+   </style>
+{{/section}}
+
+<script>
+	var currentpage= parseInt(document.getElementById('current-page').value)
+	var totalpages= parseInt(document.getElementById('total-pages').value)
+	
+
+	document.getElementById('page'+currentpage+'link').setAttribute('class', 'active')
+	if(currentpage==totalpages || totalpages==0){
+		document.getElementById('next').hidden=true;
+		document.getElementById('last-page-btn').hidden=true;
+	}
+	if(currentpage==1){
+		document.getElementById('prev').hidden=true;
+		document.getElementById('first-page-btn').hidden=true;
+
+	}
+
+	let searchString= document.getElementById('search-field').value
+	let element=document.getElementById('tags').querySelector('a[href="/?search='+searchString+'"]');
+
+	if(searchString && element){
+
+		element.style.background= "wheat";
+		element.setAttribute('href', '/')
+	}
+</script>
+

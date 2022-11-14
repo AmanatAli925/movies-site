@@ -1,0 +1,237 @@
+<a href="/" class='topEl'><h1>MOVIES FOR YOU</h1></a>
+
+
+
+<div itemscope itemtype="https://schema.org/VideoObject"> 
+            
+            
+            
+
+            <h2 class='topEl'><span itemprop="name">{{title}}</span></h2>
+            <p class='topEl'><span itemprop="description">Watch <cite>{{tolower title}}</cite> movie online. Fast video stream and simple interface.</span></p>
+            
+	    
+	    
+
+    
+            {{#if uploadDate}}
+	
+	    	<meta itemprop="uploadDate" content="{{uploadDate}}" />
+	    {{/if}}
+	    {{#if duration}}
+		<meta itemprop="duration" content="{{duration}}"/>
+            {{/if}}
+	    <meta itemprop="thumbnailUrl" content="/thumbnails/{{token}}.jpg" />
+ 	    {{#if downloadLinks}}
+		{{#if stream_host}}
+			{{#ifEqual stream_host 'yt'}}
+				<meta itemprop="contentURL" content="/videos/{{../token}}.mpd" />
+			{{else}}
+				<meta itemprop="contentURL" content="/video/{{../token}}/master.m3u8" />
+			
+			{{/ifEqual}}
+		{{else}}
+			<meta itemprop="contentURL" content="/download-movie/{{token}}.mp4" />
+			
+		{{/if}}
+		 
+		{{#if stream_host}}
+			<div data-shaka-player-container style="max-width:100%" id='video-container'>
+       				<video data-shaka-player id="video" poster="/posters/{{token}}.jpg" style="width:100%;height:100%"></video>
+    			</div>	
+			{{else}}
+			<div style="max-width:100%" id='video-container'> 
+       				
+    			</div>
+		{{/if}}
+	    
+            {{/if}} 
+</div>
+
+
+
+{{#if downloadLinks}}
+	<h2>{{title}} Movie Download Link</h2>
+	
+	<a href="/download-movie/{{token}}.mp4" id="download-btn" target=_blank class="download_btn">{{title}} Download </a>
+{{/if}}
+
+
+<div class='prev-next-container'>
+	{{#if prev}}
+		<div class="movie-card">
+			<a href="/{{prev.token}}"  >
+				<img alt="Movie cover image"   width="200" height="200"  src="/thumbnails/{{prev.token}}.jpg" width="250" class="thumbnail"/>
+			</a>
+			<p class="title">{{prev.title}}</p>
+		</div>
+
+	{{/if}}
+	{{#if next}}
+		<div class="movie-card">
+			<a href="/movie/{{next.token}}"  >
+				<img alt="Movie cover image"   width="200" height="200"  src="/thumbnails/{{next.token}}.jpg" width="250" class="thumbnail"/>
+			</a>
+			<p class="title">{{next.title}}</p>
+		</div>
+	{{/if}}
+
+</div> 
+
+
+<span id="token" hidden="true">{{{ token }}}</span>
+
+<span id="stream_host" hidden="true" style="color:red;">{{{ stream_host }}}</span>
+
+{{#section 'head'}}
+    {{#if stream_host}}
+    	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.2.0/controls.min.css" integrity="sha512-UD+bsZLtn9CgGhS6UsDxAzUR1HgvZbpqIlm/XF3ho8OGm1TDQizOD3g7XfKug9yVY7g5GRKUwOuiPWffley9RA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    {{/if}}
+    <script type="application/ld+json">
+	{
+  		"@context": "https://schema.org/",
+  		"@type": "Movie",
+  		"name": "{{title}}",
+		"image": "https://www.themovieshouse.com/posters/{{token}}.jpg"  
+	}
+    </script>
+    <style>
+	.video-js .vjs-time-control{display:block;}
+    	.video-js .vjs-remaining-time{display: none;}
+	.video-js .vjs-seek-to-live-control{display: none;}
+	form.search-form{
+		margin-bottom: 4rem;
+	}
+	form.search-form input{
+		width: 20rem;
+		padding: .3rem;
+	}
+	form.search-form button{
+		padding: .3rem;
+	}
+	body{
+		margin: 0;
+	}
+
+	div.video-js{
+		width: 100%;
+		margin-bottom: 3rem;
+		
+	}
+	div.video-container{
+		position: relative ;
+	}
+	div.bkwrd-frwrd-container{
+		
+		position:absolute;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;	
+		display: none;
+		grid-template-columns: 1fr 1fr;
+		justify-content: center;
+		align-items: center;
+		display:none;
+		opacity: 1;
+  		transition: opacity 1s;
+		
+	}
+		
+	.fade {
+		opacity: 0;
+	}	
+	div.bkwrd, div.frwrd{
+		
+		width: 100%;
+		height: 60px;
+		display:flex;
+		opacity: 0;
+	}
+	
+	div.bkwrd{
+		justify-content: flex-start
+	}
+	div.frwrd{
+		justify-content: flex-end
+	}
+	div.triangle-right, div.triangle-left{
+		width: 0;
+		height: 0;
+		margin: 0;
+	}
+	div.triangle-right {
+		border-top: 25px solid transparent;
+		border-left: 50px solid #555;
+		border-bottom: 25px solid transparent;
+	}
+	div.triangle-left {
+		border-top: 25px solid transparent;
+		border-right: 50px solid #555;
+		border-bottom: 25px solid transparent;
+	}
+	video{
+		width:100%;
+		
+	}
+	div.prev-next-container{
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		justify-content: space-around;
+		margin: 4rem 0;
+	}
+	div.movie-card{
+		border-radius: 1px;
+		border: 1px solid black;
+		cursor: pointer;
+		margin: 1rem 8rem;
+
+	}
+
+	div.movie-card img.thumbnail{
+		width: 100% !important;
+	}
+
+	div.movie-card p.title{
+		text-transform: capitalize;
+
+	}
+	a.download_btn{
+		display: inline-block;
+		margin: 1rem 0;
+		padding: 1rem;
+		background-color: #ADD8E6;
+	}
+
+	iframe.video2{
+		width: 100%;
+		height: 500px;
+		margin-bottom: 5rem;
+	}
+
+	@media (max-width: 480px){
+		div.prev-next-container{
+			display: grid;
+			grid-template-columns:  1fr !important;
+
+		}
+
+		div.movie-card{
+
+			margin: 1rem 0;
+
+		}
+		iframe.video2{
+			height: 200px;
+		}
+
+	}
+   </style>
+{{/section }}
+{{#if stream_host}}
+	<script type="text/javascript" src="https://imasdk.googleapis.com/js/sdkloader/ima3.js"></script>
+	<script src="/js/mux.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.2.0/shaka-player.ui.min.js" integrity="sha512-8HfzbWgurNnyHwAmoooT792EkVhb6SKkMN4V4EQyb1JFaMBkYWcEbQnfIhSjcf/IQdYwqFCUSVJ6dsxwS9LSBA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script src="/js/myapp.js"></script>
+{{/if}}
+
