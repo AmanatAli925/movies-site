@@ -12,7 +12,7 @@ let movieslist=[]
 let movieslist_obj={}
 
 function getMovies(){
-    return new Promise(function(resolve, reject){
+   return new Promise(function(resolve, reject){
 
         Movies.find({}).lean().exec(function(err, all_movies){
 

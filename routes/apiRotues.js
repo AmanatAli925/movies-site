@@ -1,6 +1,5 @@
 
 const express= require('express')
-const getMovies= require('../utils/getMovies')
 const refreshData= require('../utils/refreshData')
 const {
     yt_map,

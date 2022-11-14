@@ -27,13 +27,16 @@ let {stream_hosts, set_stream_hosts}= require('./utils/streamHosts')
 const Cache= require('./utils/cache')
 const get_streamlink= require('./utils/getStreamlink')
 const maps= require('./utils/get_maps');
+const indexRoutes= require('./routes/indexRoutes')
+const refreshData= require('./utils/refreshData')
+const moviePageRoutes= require('./routes/moviePageRoutes')
+const apiRoutes= require('./routes/apiRotues')
+
 const {
 	movieslist,
 	movieslist_obj,
 	getMovies
 }= require('./utils/getMovies')
-const indexRoutes= require('./routes/indexRoutes')
-const refreshData= require('./utils/refreshData')
 require('dotenv').config()
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
@@ -105,6 +108,8 @@ app.use(static_middlewares)
 
 
 app.use(indexRoutes)
+app.use(moviePageRoutes)
+app.use(apiRoutes)
 app.get('/all_urls', function(req, res){
 	res.setHeader('content-type', 'text/plain')
 	all_urls=""
