@@ -7,7 +7,8 @@ const {
 }= require('../utils/getMovies')
 let {stream_hosts, set_stream_hosts}= require('../utils/streamHosts')
 const router= express.Router()
-
+const fs= require('fs')
+const path= require('path')
 
 
 router.get("/dev",  (req, res) => handle_page_request(req, res))
@@ -19,6 +20,12 @@ router.get("/page/last",  (req, res) => handle_page_request(req, res))
 function copy(value){
 	return JSON.parse(JSON.stringify(value))
 }
+
+let moviePageDependencies= fs.readFileSync(
+							 	path.join(__dirname,'..', 'views', 'movie1.handlebars'),
+							 	'utf-8'
+							 )
+							 .split('<!--DEPENDENCIES-->')[1]
 function handle_page_request(req, res){ 
     
     console.log('in handle_page_request')
@@ -61,7 +68,7 @@ function handle_page_request(req, res){
 	if(!req.query.search) req.query.search="";
 	req.query.search=req.query.search.replace(/ /g, "_")
 	var relevance=[]
-	if(req.query.search)
+	if(req.query.search){
 		search_movieslist= movieslist.filter( function(m){
 			var indexes= m.token
 			indexes = '-'+indexes.toLowerCase()+'-';
@@ -111,19 +118,16 @@ function handle_page_request(req, res){
 			// any movie with weight 1 or more should be included
 			return overall_weight		
 		})
+		// copying values to not add relevances to original array
+		search_movieslist= copy(search_movieslist)
+		search_movieslist= search_movieslist.map( (m,i) => { return {...m, relevance: relevance[i]}})
+		search_movieslist= search_movieslist.sort( (a,b )=> b.relevance-a.relevance)
+
+	}
 	else
 	    search_movieslist= movieslist
 
-	// copying values to not add relevances to original array
-	search_movieslist= copy(search_movieslist)
-
-	if(req.query.search)
-		search_movieslist= search_movieslist.map( (m,i) => { return {...m, relevance: relevance[i]}})
 	
-	
-	if(req.query.search)
-		search_movieslist= search_movieslist.sort( (a,b )=> b.relevance-a.relevance)
-
 	page_movieslist= search_movieslist
 						.slice(end-movies_per_page, end)
 	
@@ -132,13 +136,14 @@ function handle_page_request(req, res){
 		return res.json(page_movieslist)
 	
     totalpages=Math.ceil(search_movieslist.length/movies_per_page)	
-    
     res.render(req.query.view || 'home', {
             movieslist: page_movieslist,
+			movieslist_str: JSON.stringify(page_movieslist),
             page,
             totalpages,
 	    	pages_nums: pageArray(page,totalpages),
-	    	search: req.query.search.replace(/_/g, ' ')
+	    	search: req.query.search.replace(/_/g, ' '),
+			moviePageDependencies
     })
 	
 }

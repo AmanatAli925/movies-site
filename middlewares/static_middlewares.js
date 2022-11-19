@@ -53,11 +53,12 @@ function serve_static(req, res,next){
 
 function serve_stream(req, res, next){
 	if(req.originalUrl.startsWith('/stream/')){	
-		serve_end_url(res,get_streamlink( req.originalUrl))
+		serve_end_url(res,get_streamlink(req.originalUrl))
 		return;
 	}
 	next()
 }
+
 
 module.exports= [
 	serve_thumbnails,

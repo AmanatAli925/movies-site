@@ -31,6 +31,8 @@ const indexRoutes= require('./routes/indexRoutes')
 const refreshData= require('./utils/refreshData')
 const moviePageRoutes= require('./routes/moviePageRoutes')
 const apiRoutes= require('./routes/apiRotues')
+const Handlebars= require('handlebars')
+
 
 const {
 	movieslist,
@@ -45,21 +47,40 @@ var tags= ["2021 movies", "2022 movies", "2022 movies", "2019 movies", "hindi du
 
 //console.log(stream_map)
 
-app.engine('handlebars', express_hbs({
-	helpers: {
-		tolower: str => str.toLowerCase(),
-		inc: n => ++n,
-		dec: n => --n, 
-		getArg: n => n.split('?')[1],
-		ifNot: v=> !v,
-		section: function(name, options){
-			if(!this.sections) this.sections={}
-			this.sections[name]= options.fn(this)
-		},
-		ifEqual: (v1, v2, options) => v1==v2 ? options.fn(this) : options.inverse(this)
-		
-		
+let express_helpers= {
+	tolower: str => str.toLowerCase(),
+	inc: n => ++n,
+	dec: n => --n, 
+	getArg: n => n.split('?')[1],
+	ifNot: v=> !v,
+	section: function(name, options){
+		if(!this.sections) this.sections={}
+		this.sections[name]= options.fn(this)
+	},
+	ifEqual: (v1, v2, options) => v1==v2 ? options.fn(this) : options.inverse(this),
+	
+	getMoviePage: function(movie){
+		return  moviePageTemplate(movie)
 	}
+}
+
+Object.keys(express_helpers).forEach(function(key){
+	Handlebars.registerHelper(key, express_helpers[key])
+})
+
+
+const moviePageTemplate= Handlebars.compile(
+	fs.readFileSync('./views/movie1.handlebars', 'utf-8')
+	  .replace("{{#section 'head'}}", "")
+	  .replace("{{/section}}", "")
+	  .split('<!--DEPENDENCIES-->')[0]
+)
+
+const moviePageBody= fs.readFileSync('./views/movie1.handlebars', 'utf-8')
+
+
+app.engine('handlebars', express_hbs({
+	helpers: express_helpers
 }));
 
 
@@ -89,8 +110,9 @@ conn= mongoose.connection;
 //mongoose.set('bufferCommands', false) 
 conn.once('open', function(){
 	console.log("Connected to db")    
-	getMovies().then(function(movies){
+	getMovies().then(function(){
 		console.log('returned from getMovies')
+		
 	}).catch(function(err){
 		console.log(err)
 	})
