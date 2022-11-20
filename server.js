@@ -130,8 +130,9 @@ app.use(static_middlewares)
 
 
 app.use(indexRoutes)
-app.use(moviePageRoutes)
 app.use(apiRoutes)
+
+app.use(moviePageRoutes)
 app.get('/all_urls', function(req, res){
 	res.setHeader('content-type', 'text/plain')
 	all_urls=""
@@ -218,6 +219,6 @@ app.use('*', function(req, res){
 
 
 
-app.listen(9999, function(){  
-	console.log("listening to 9999"); 
+app.listen(9998, function(){  
+	console.log("listening to 9998"); 
 });
