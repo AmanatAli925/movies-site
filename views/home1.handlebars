@@ -94,11 +94,7 @@
 
 {{{moviePageDependencies}}}
 
-{{#each movieslist as |movie|}}
-	<div id="{{movie.token}}-movie-page" hidden>
-		{{{getMoviePage movie}}}
-	</div>
-{{/each}}
+
 
 
 {{#section 'head'}}
@@ -234,28 +230,46 @@
 		var movie_el;
 		setInterval(function(){
 			if(window.location.pathname=="/" && Boolean(movie_el)){
-				movie_el.hidden=true;
+				var player=videojs.getAllPlayers().find(function(player){
+					return player.currentTime()!=0 && !player.paused()
+				})
+				if(player) player.dispose()
+				var movie_el_new= movie_el.cloneNode(true)
+				movie_el.remove();
+				movie_el_new.hidden=true;
+				console.log(movie_el_new)
+				window
+					.document
+					.body
+					.appendChild(
+						movie_el_new
+					)
 				home_page.hidden=false;
+				movie_el=false;
+						
 			}
+			
+			
 		}, 500)
 		var currentpage= parseInt(document.getElementById('current-page').value)
 		var totalpages= parseInt(document.getElementById('total-pages').value)
 
 		var movieslist={{{movieslist_str}}}
-
-		movieslist.forEach(function(movie){
-			console.log('\n\n\n\nREACHING HERE')
-			
-			var cardImg= document.getElementById(movie.token+'-card-img')
-			var cardBtn= document.getElementById(movie.token+'-card-btn')
-			cardImg.addEventListener('click', function(event){
-				showMoviePage(event, movie)
+		function addListeners(){
+			movieslist.forEach(function(movie){
+				console.log('\n\n\n\nREACHING HERE')
+				
+				var cardImg= document.getElementById(movie.token+'-card-img')
+				var cardBtn= document.getElementById(movie.token+'-card-btn')
+				cardImg.addEventListener('click', function(event){
+					showMoviePage(event, movie)
+				})
+				cardBtn.addEventListener('click', function(event){
+					showMoviePage(event, movie)
+				})
 			})
-			cardBtn.addEventListener('click', function(event){
-				showMoviePage(event, movie)
-			})
-		})
-
+		}
+		addListeners()
 		function showMoviePage(event, movie){
 			event.preventDefault()
 			movie_el= document.getElementById(movie.token+'-movie-page')
@@ -292,5 +306,11 @@
 	})()
 </script>
 
+
+{{#each movieslist as |movie|}}
+	<div id="{{movie.token}}-movie-page" hidden>
+		{{{getMoviePage movie}}}
+	</div>
+{{/each}}
 
 
